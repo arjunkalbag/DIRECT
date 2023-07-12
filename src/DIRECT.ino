@@ -14,7 +14,7 @@ bool CNCT = true;
 
 SYSTEM_THREAD(ENABLED);
 
-Adafruit_NeoPixel strip(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
+Adafruit_NeoPixel strip(PIXEL_COUNT, LIGHT, PIXEL_TYPE);
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance.
 
@@ -58,7 +58,6 @@ void loop()
             Serial.println("Connected");
             CNCT = false;
         }
-        lightFunc();
     }
     else
     {
@@ -102,58 +101,25 @@ void cardScan()
     switch (choice)
     {
     case 0x47:
-        digitalWrite(light1, HIGH);
-        digitalWrite(light2, LOW);
-        digitalWrite(light3, LOW);
-        digitalWrite(light4, LOW);
-        break;
-    case 0xF1:
-        digitalWrite(light1, LOW);
-        digitalWrite(light2, HIGH);
-        digitalWrite(light3, LOW);
-        digitalWrite(light4, LOW);
-        break;
-    case 0x8B:
-        digitalWrite(light1, LOW);
-        digitalWrite(light2, LOW);
-        digitalWrite(light3, HIGH);
-        digitalWrite(light4, LOW);
-        break;
-    case 0x7B:
-        digitalWrite(light1, LOW);
-        digitalWrite(light2, LOW);
-        digitalWrite(light3, LOW);
-        digitalWrite(light4, HIGH);
-        break;
-    }
-}
-
-void lightFunc()
-{
-    int LightOne = digitalRead(light1);
-    int LightTwo = digitalRead(light2);
-    int LightThree = digitalRead(light3);
-    int LightFour = digitalRead(light4);
-
-    if (LightOne == true)
-    {
         client.publish("CapstoneNode", "Light 1!");
         Serial.println("L1");
-    }
-    if (LightTwo == true)
-    {
+        PurpleChange();
+        break;
+    case 0xF1:
         client.publish("CapstoneNode", "Light 2!");
         Serial.println("L2");
-    }
-    if (LightThree == true)
-    {
+        RedChange();
+        break;
+    case 0x8B:
         client.publish("CapstoneNode", "Light 3!");
         Serial.println("L3");
-    }
-    if (LightFour == true)
-    {
+        BlueChange();
+        break;
+    case 0x7B:
         client.publish("CapstoneNode", "Light 4!");
         Serial.println("L4");
+        GreenChange();
+        break;
     }
 }
 
@@ -279,6 +245,110 @@ void RedChange()
     colorWipe(strip.Color(55, 0, 0), WAIT_TIME);
     colorWipe(strip.Color(57, 0, 0), WAIT_TIME);
     // back to red
+}
+void PurpleChange()
+{
+    colorWipe(strip.Color(36, 24, 48), WAIT_TIME); // purple
+    colorWipe(strip.Color(35, 22, 46), WAIT_TIME);
+    colorWipe(strip.Color(35, 20, 44), WAIT_TIME);
+    colorWipe(strip.Color(34, 18, 43), WAIT_TIME);
+    colorWipe(strip.Color(34, 16, 41), WAIT_TIME);
+    colorWipe(strip.Color(33, 14, 40), WAIT_TIME);
+    colorWipe(strip.Color(33, 12, 39), WAIT_TIME); // purple/violet
+    colorWipe(strip.Color(32, 10, 37), WAIT_TIME);
+    colorWipe(strip.Color(32, 8, 36), WAIT_TIME);
+    colorWipe(strip.Color(31, 6, 34), WAIT_TIME);
+    colorWipe(strip.Color(31, 4, 33), WAIT_TIME);
+    colorWipe(strip.Color(30, 2, 31), WAIT_TIME);
+    colorWipe(strip.Color(30, 0, 30), WAIT_TIME); // violet
+    colorWipe(strip.Color(30, 2, 31), WAIT_TIME);
+    colorWipe(strip.Color(31, 4, 33), WAIT_TIME);
+    colorWipe(strip.Color(31, 6, 34), WAIT_TIME);
+    colorWipe(strip.Color(32, 8, 36), WAIT_TIME);
+    colorWipe(strip.Color(32, 10, 37), WAIT_TIME);
+    colorWipe(strip.Color(33, 12, 39), WAIT_TIME); // violet/purple
+    colorWipe(strip.Color(33, 14, 40), WAIT_TIME);
+    colorWipe(strip.Color(34, 16, 41), WAIT_TIME);
+    colorWipe(strip.Color(34, 18, 43), WAIT_TIME);
+    colorWipe(strip.Color(35, 20, 44), WAIT_TIME);
+    colorWipe(strip.Color(35, 22, 46), WAIT_TIME);
+    colorWipe(strip.Color(36, 24, 48), WAIT_TIME); // purple
+    colorWipe(strip.Color(38, 22, 49), WAIT_TIME);
+    colorWipe(strip.Color(40, 20, 50), WAIT_TIME);
+    colorWipe(strip.Color(42, 18, 51), WAIT_TIME);
+    colorWipe(strip.Color(44, 16, 52), WAIT_TIME);
+    colorWipe(strip.Color(46, 14, 53), WAIT_TIME);
+    colorWipe(strip.Color(48, 12, 54), WAIT_TIME); // purple/magenta
+    colorWipe(strip.Color(50, 10, 55), WAIT_TIME);
+    colorWipe(strip.Color(52, 8, 56), WAIT_TIME);
+    colorWipe(strip.Color(54, 6, 57), WAIT_TIME);
+    colorWipe(strip.Color(56, 4, 58), WAIT_TIME);
+    colorWipe(strip.Color(58, 2, 59), WAIT_TIME);
+    colorWipe(strip.Color(60, 0, 60), WAIT_TIME); // magenta
+    colorWipe(strip.Color(58, 2, 59), WAIT_TIME);
+    colorWipe(strip.Color(56, 4, 58), WAIT_TIME);
+    colorWipe(strip.Color(54, 6, 57), WAIT_TIME);
+    colorWipe(strip.Color(52, 8, 56), WAIT_TIME);
+    colorWipe(strip.Color(50, 10, 55), WAIT_TIME);
+    colorWipe(strip.Color(48, 12, 54), WAIT_TIME); // magenta/purple
+    colorWipe(strip.Color(46, 14, 53), WAIT_TIME);
+    colorWipe(strip.Color(44, 16, 52), WAIT_TIME);
+    colorWipe(strip.Color(42, 18, 51), WAIT_TIME);
+    colorWipe(strip.Color(40, 20, 50), WAIT_TIME);
+    colorWipe(strip.Color(38, 22, 49), WAIT_TIME);
+    // back to purple
+}
+void GreenChange()
+{
+    colorWipe(strip.Color(0, 30, 0), WAIT_TIME); // green
+    colorWipe(strip.Color(0, 32, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 35, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 37, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 40, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 42, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 45, 0), WAIT_TIME); // green/lime
+    colorWipe(strip.Color(0, 47, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 49, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 52, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 55, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 57, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 60, 0), WAIT_TIME); // lime
+    colorWipe(strip.Color(0, 57, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 55, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 52, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 49, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 47, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 45, 0), WAIT_TIME); // lime/green
+    colorWipe(strip.Color(0, 42, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 40, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 37, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 35, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 32, 0), WAIT_TIME);
+    colorWipe(strip.Color(0, 30, 0), WAIT_TIME); // green
+    colorWipe(strip.Color(0, 30, 0), WAIT_TIME);
+    colorWipe(strip.Color(1, 31, 1), WAIT_TIME);
+    colorWipe(strip.Color(1, 31, 1), WAIT_TIME);
+    colorWipe(strip.Color(2, 32, 2), WAIT_TIME);
+    colorWipe(strip.Color(2, 32, 2), WAIT_TIME);
+    colorWipe(strip.Color(3, 33, 3), WAIT_TIME); // green/seagreen
+    colorWipe(strip.Color(3, 33, 3), WAIT_TIME);
+    colorWipe(strip.Color(4, 34, 4), WAIT_TIME);
+    colorWipe(strip.Color(4, 34, 4), WAIT_TIME);
+    colorWipe(strip.Color(5, 35, 5), WAIT_TIME);
+    colorWipe(strip.Color(5, 35, 5), WAIT_TIME);
+    colorWipe(strip.Color(6, 36, 6), WAIT_TIME); // seagreen
+    colorWipe(strip.Color(5, 35, 5), WAIT_TIME);
+    colorWipe(strip.Color(5, 35, 5), WAIT_TIME);
+    colorWipe(strip.Color(4, 34, 4), WAIT_TIME);
+    colorWipe(strip.Color(4, 34, 4), WAIT_TIME);
+    colorWipe(strip.Color(3, 33, 3), WAIT_TIME);
+    colorWipe(strip.Color(3, 33, 3), WAIT_TIME); // seagreen/green
+    colorWipe(strip.Color(2, 32, 2), WAIT_TIME);
+    colorWipe(strip.Color(2, 32, 2), WAIT_TIME);
+    colorWipe(strip.Color(1, 31, 1), WAIT_TIME);
+    colorWipe(strip.Color(1, 31, 1), WAIT_TIME);
+    colorWipe(strip.Color(0, 30, 0), WAIT_TIME);
+    // back to green
 }
 void colorWipe(uint32_t c, uint8_t wait)
 {
