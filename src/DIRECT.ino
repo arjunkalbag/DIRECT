@@ -110,27 +110,22 @@ void cardScan()
     switch (choice)
     {
     case 0x47:
-        client.publish("CapstoneNode", "Light 1!");
+        client.publish("CapstoneNode", "See You Again - Tyler, The Creator (feat. Kali Uchis");
         Serial.println("L1");
         PurpleChange();
         playSong(song1);
         break;
     case 0xF1:
-        client.publish("CapstoneNode", "Light 2!");
+        client.publish("CapstoneNode", "Sparks - Coldplay");
         Serial.println("L2");
         RedChange();
         playSong(song2);
         break;
     case 0x8B:
-        client.publish("CapstoneNode", "Light 3!");
+        client.publish("CapstoneNode", "pluh!");
         Serial.println("L3");
         BlueChange();
         playSong(song3);
-        break;
-    case 0x7B:
-        client.publish("CapstoneNode", "Light 4!");
-        Serial.println("L4");
-        GreenChange();
         break;
     }
 }
