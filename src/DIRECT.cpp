@@ -19,13 +19,19 @@ void RedChange();
 void PurpleChange();
 void GreenChange();
 void colorWipe(uint32_t c, uint8_t wait);
+void playSong(pin_t songPin);
 #line 6 "/Users/student/Desktop/IoT/DIRECT/src/DIRECT.ino"
 #define SS_PIN A5
 #define RST_PIN D5
+#define MUSIC_RST D2
 #define LIGHT D4
 #define PIXEL_COUNT 16
 #define PIXEL_TYPE WS2812B
-#define WAIT_TIME 10
+#define WAIT_TIME 1
+
+#define song1 D8
+#define song2 D7
+#define song3 D6
 
 bool CNCT = true;
 
@@ -46,11 +52,15 @@ void setup()
 
     pinMode(SS_PIN, INPUT);
     pinMode(RST_PIN, INPUT);
-    pinMode(light1, OUTPUT);
-    pinMode(light2, OUTPUT);
-    pinMode(light3, OUTPUT);
-    pinMode(light4, OUTPUT);
+    pinMode(MUSIC_RST, OUTPUT);
     pinMode(LIGHT, OUTPUT);
+
+    pinMode(song1, OUTPUT);
+    digitalWrite(song1, HIGH);
+    pinMode(song2, OUTPUT);
+    digitalWrite(song2, HIGH);
+    pinMode(song3, OUTPUT);
+    digitalWrite(song3, HIGH);
 
     strip.begin();
     strip.show();
@@ -59,8 +69,8 @@ void setup()
     SPI.begin();        // Init SPI bus
     mfrc522.PCD_Init(); // Init MFRC522 card
 
-    // while (!Serial.isConnected())
-    //   ;
+    while (!Serial.isConnected())
+        ;
 
     selfTest();
 }
@@ -121,16 +131,19 @@ void cardScan()
         client.publish("CapstoneNode", "Light 1!");
         Serial.println("L1");
         PurpleChange();
+        playSong(song1);
         break;
     case 0xF1:
         client.publish("CapstoneNode", "Light 2!");
         Serial.println("L2");
         RedChange();
+        playSong(song2);
         break;
     case 0x8B:
         client.publish("CapstoneNode", "Light 3!");
         Serial.println("L3");
         BlueChange();
+        playSong(song3);
         break;
     case 0x7B:
         client.publish("CapstoneNode", "Light 4!");
@@ -375,4 +388,15 @@ void colorWipe(uint32_t c, uint8_t wait)
         strip.show();
         delay(wait);
     }
+}
+
+void playSong(pin_t songPin)
+{
+    digitalWrite(MUSIC_RST, LOW);
+    delay(10);
+    digitalWrite(MUSIC_RST, HIGH);
+    delay(1000);
+    digitalWrite(songPin, LOW);
+    delay(100);
+    digitalWrite(songPin, HIGH);
 }
